@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>迷路生成</title>
+        <title>maze</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="Labyrinth_generator.js"></script>
         <script>
@@ -13,6 +13,7 @@
             })
         </script>
         <script>
+            body_width=0
             function changesize(size){
                 var elements = document.getElementsByClassName('maze_wall');
                 size=size+'px'
@@ -22,6 +23,9 @@
                 }
             } 
             function maze(){
+                if(body_width==0){
+                    body_width=document.body.clientWidth
+                }
                 document.getElementById('marker').innerHTML=''
                 column=document.getElementById('column').value
                 row=document.getElementById('row').value
@@ -30,6 +34,11 @@
                 height_min=document.getElementById('background').clientHeight*0.9/row
                 console.log(width_min,height_min)
                 if(width_min<6||height_min<6){
+                    if(6*column>body_width){
+                        document.body.style.width=6*column+'px'
+                    }else{
+                        document.body.style.width=body_width+'px'
+                    }
                     changesize(6)
                 }else if(width_min>25&&height_min>25){
                     changesize(25)
@@ -48,8 +57,8 @@
                 left: 0;
                 pointer-events: none;
                 position: fixed;
-                height: 100%;
                 width: 100%;
+                height: 100%;
             }
             button{
                 height: 20px;
